@@ -12,23 +12,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  Future<void> checkLoginStatus() async {
-    final User? user = _auth.currentUser;
-    if (user != null) {
-      // Pengguna sudah login
-      // Lakukan navigasi ke halaman Home
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    checkLoginStatus();
-  }
 
 
   Future<void> login() async {

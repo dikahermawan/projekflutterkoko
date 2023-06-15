@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/views/input_data.dart';
 import 'package:project/views/login.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -106,7 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-             
+                FloatingActionButton(onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddData()),
+                  );
+                })
               ],
             ),
           ),
