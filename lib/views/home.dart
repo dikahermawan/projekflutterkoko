@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project/views/input_data.dart';
 import 'package:project/views/login.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -94,22 +93,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Text('No data available');
                       } else {
                         return ListView(
-                          children: snapshot.data!.docs.map(
-                            (e) => ItemCard(
-                              e.data()['name'] as String,
-                              e.data()['ket'] as String,
-                            ),
-                          ).toList(),
+                          children: snapshot.data!.docs
+                              .map(
+                                (e) => ItemCard(
+                                  e.data()['name'] as String,
+                                  e.data()['ket'] as String,
+                                ),
+                              )
+                              .toList(),
                         );
                       }
                     },
                   ),
                 ),
-                FloatingActionButton(onPressed: (){
-                   Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddData()),); 
-                })
+             
               ],
             ),
           ),

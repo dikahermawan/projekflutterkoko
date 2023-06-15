@@ -1,10 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project/views/home.dart';
-import 'package:project/views/input_data.dart';
 import 'package:project/views/login.dart';
-import 'package:project/views/register.dart';
 import 'package:project/views/upload_gambar.dart';
 import 'firebase_options.dart';
 
@@ -27,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ImageUp(),
+      home: LoginScreen(),
     );
   }
 }
