@@ -13,6 +13,23 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  Future<void> checkLoginStatus() async {
+    final User? user = _auth.currentUser;
+    if (user != null) {
+      // Pengguna sudah login
+      // Lakukan navigasi ke halaman Home
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
 
   Future<void> login() async {
     try {
@@ -49,90 +66,115 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          child: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(height: screenSize.height * 0.1),
-              Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: screenSize.height * 0.05),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Center(
                 child: Text(
                   'Login',
                   style: TextStyle(
-                      color: const Color.fromARGB(255, 2, 45, 119),
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500),
+                    color: const Color.fromARGB(255, 2, 45, 119),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-              SizedBox(height: screenSize.height * 0.01),
-              Container(
-                width: screenSize.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: screenSize.width * 0.8,
-                      child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
+            ),
+            Image.asset(
+              "assets/images/welcome.png",
+              width: screenSize.width, // Atur lebar gambar
+              height: screenSize.height * 0.4, // Atur tinggi gambar
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: screenSize.width * 0.8,
+                        child: TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 16),
-                    Container(
-                      width: screenSize.width * 0.8,
-                      child: TextField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                        ),
-                        obscureText: true,
-                      ),
-                    ),
-                    SizedBox(height: screenSize.height * 0.05),
-                    Container(
-                      width: screenSize.width * 0.8,
-                      height: screenSize.height * 0.072,
-                      child: ElevatedButton(
-                        onPressed: login,
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(16),
-                          backgroundColor:
-                              const Color.fromARGB(255, 2, 45, 119),
-                        ),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
+                      SizedBox(height: 16),
+                      Container(
+                        width: screenSize.width * 0.8,
+                        child: TextField(
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                          ),
+                          obscureText: true,
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: screenSize.height * 0.05),
+                      Container(
+                        width: screenSize.width * 0.8,
+                        height: screenSize.height * 0.072,
+                        child: ElevatedButton(
+                          onPressed: login,
+                          //  {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => HomeScreen()),
+                            // );
+                          // },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(16),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 2, 45, 119),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5))),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenSize.height * 0.05),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenSize.width * 0.14),
+                        child: Container(
+                          width: screenSize.width,
+                          child: Row(
+                            children: [
+                              Text('Belum memiliki akun? '),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegisterScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromARGB(255, 2, 45, 119),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: screenSize.height * 0.2),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 58.0),
-                child: Row(
-                  children: [
-                    Text('Belum memiliki akun? '),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterScreen()),
-                        );
-                      },
-                      child: Text('Register',
-                          style: TextStyle(
-                              color: const Color.fromARGB(255, 2, 45, 119))),
-                    ),
-                  ],
-                ),
-              ),
-            ]),
-          ),
+            ),
+          ],
         ),
       ),
     );

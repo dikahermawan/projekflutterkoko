@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -35,6 +36,7 @@ class _AddDataState extends State<AddData> {
 
     setState(() {
       currentPosition = position;
+      print(currentPosition);
       markers.add(
         Marker(
           markerId: MarkerId('currentLocation'),
@@ -52,24 +54,11 @@ class _AddDataState extends State<AddData> {
     });
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-  void _onMapTap(LatLng position) {
-    setState(() {
-      markers.clear();
-      markers.add(
-        Marker(
-          markerId: MarkerId('selectedLocation'),
-          position: position,
-        ),
-      );
-    });
-  }
+  
 
   @override
   Widget build(BuildContext context) {
+     
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Data'),
@@ -108,23 +97,6 @@ class _AddDataState extends State<AddData> {
             SizedBox(height: 16.0),
 
             // Lokasi Map
-            Container(
-              height: 200,
-              child: GoogleMap(
-                onMapCreated: _onMapCreated,
-                onTap: _onMapTap,
-                markers: markers,
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    currentPosition?.latitude ?? 0,
-                    currentPosition?.longitude ?? 0,
-                  ),
-                  zoom: 15.0,
-                ),
-              ),
-            ),
-
-            SizedBox(height: 16.0),
 
             // Image Input
             ElevatedButton(

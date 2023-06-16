@@ -7,7 +7,7 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> register() async {
+  Future<void> register(BuildContext context) async {
     try {
       final String email = emailController.text.trim();
       final String password = passwordController.text.trim();
@@ -22,9 +22,10 @@ class RegisterScreen extends StatelessWidget {
         email: email,
         password: password,
       );
-
+       
       // Akun berhasil dibuat
-      // Lakukan navigasi ke halaman selanjutnya, atau tampilkan pesan sukses
+      // Lakukan navigasi kembali ke halaman login
+      Navigator.pop(context);
     } catch (e) {
       // Terjadi kesalahan saat membuat akun
       // Tampilkan pesan error atau lakukan penanganan kesalahan lainnya
@@ -37,22 +38,32 @@ class RegisterScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: screenSize.height * 0.1),
-                Center(
-                  child: Text(
-                    'Register',
-                    style: TextStyle(color: const Color.fromARGB(255, 2, 45, 119), fontSize: 25, fontWeight: FontWeight.w500),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: screenSize.height * 0.05),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Center(
+                child: Text(
+                  'Register',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 2, 45, 119),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                SizedBox(height: screenSize.height * 0.01),
-                Container(
-                  width: screenSize.width,
+              ),
+            ),
+            Image.asset(
+              "assets/images/welcome.png",
+              width: screenSize.width, // Atur lebar gambar
+              height: screenSize.height * 0.4, // Atur tinggi gambar
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -81,27 +92,53 @@ class RegisterScreen extends StatelessWidget {
                         width: screenSize.width * 0.8,
                         height: screenSize.height * 0.072,
                         child: ElevatedButton(
-                          onPressed: register,
+                          onPressed: () {
+                            register(context); // Panggil metode register dengan parameter context
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(16),
                             backgroundColor: const Color.fromARGB(255, 2, 45, 119),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                           ),
                           child: Text(
                             'Register',
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenSize.height * 0.05),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.14),
+                        child: Container(
+                          width: screenSize.width,
+                          child: Row(
+                            children: [
+                              Text('Sudah memiliki akun? '),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context); // Lakukan pop untuk kembali ke halaman login
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(255, 2, 45, 119),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: screenSize.height * 0.2),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 }
-
