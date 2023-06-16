@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Lakukan navigasi ke halaman Home
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } catch (e) {
       // Terjadi kesalahan saat login

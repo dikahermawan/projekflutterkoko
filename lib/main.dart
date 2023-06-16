@@ -25,13 +25,13 @@ class MyApp extends StatelessWidget {
         }),
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading"); // Show a loading screen while checking the login status
+            return const Text("Loading"); // Show a loading screen while checking the login status
           } else {
             if (snapshot.hasData) {
-              WidgetsBinding.instance?.addPostFrameCallback((_) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
                 // Replace the current route with the home screen
                 Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => HomeScreen()),
+                  MaterialPageRoute(builder: (_) => HomePage()),
                 );
               });
             } else {
